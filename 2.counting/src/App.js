@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from "../../3.EasyTodo/node_modules/@types/react";
 
 class App extends Component {
   state = {
