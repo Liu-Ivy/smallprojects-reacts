@@ -1,5 +1,4 @@
 import React from "react";
-import "./TodoApp.css";
 
 export default function TodoApp() {
   const [todo, setTodo] = React.useState("");
