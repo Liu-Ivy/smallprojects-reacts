@@ -65,6 +65,7 @@ export default function TodoApp() {
               >
                 {todo.text}
               </span>
+
               <span className="delete-btn" onClick={() => removeTodo(todo.id)}>
                 x
               </span>

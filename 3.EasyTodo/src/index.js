@@ -1,11 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Todos from "./Todos";
+import Todolist from "./Todolist";
 import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Todos />
+    <Todolist />
   </React.StrictMode>,
   document.getElementById("root")
 );
