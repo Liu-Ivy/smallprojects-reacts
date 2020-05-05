@@ -3,10 +3,10 @@ import React, { useState } from "react";
 export default function Todolist() {
   const [todo, setTodo] = useState("");
   const [todos, setTodos] = useState([]);
-  const onChange = (e) => {
+
+  const handleChange = (e) => {
     setTodo(e.target.value);
   };
-
   const addTodo = () => {
     setTodos([
       ...todos,
@@ -14,53 +14,53 @@ export default function Todolist() {
     ]);
   };
 
-  const onSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (todo === "") return;
     addTodo();
     setTodo("");
   };
 
-  // const updateTodo = (e, i) => {
-  //   const newTodos = [...todos];
-  //   newTodos[i].text = e.target.value;
-  //   setTodos(newTodos);
-  // };
-
-  const toggleComplete = (todoId) => {
-    const newTodo = todos.map((todo) => {
-      return todo.id === todoId
-        ? { ...todo, completed: !todo.completed }
-        : todo;
-    });
-    setTodos(newTodo);
+  const toggleCompleted = (todoId) => {
+    setTodos(
+      todos.map((todo) =>
+        todo.id === todoId ? { ...todo, completed: !todo.completed } : todo
+      )
+    );
+    console.log(todos);
   };
-  const removeTodo = (todoId) => {
-    setTodos(todos.filter((todo) => todoId !== todo.id));
+
+  const handleDelete = (todoId) => {
+    setTodos(todos.filter((todo) => todo.id !== todoId));
   };
 
   return (
     <div>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={handleSubmit}>
         <h1>TodoList</h1>
-        <input id={todo} value={todo} onChange={onChange} />
-        <button> A D D </button>
+        <input id="todo" onChange={handleChange} value={todo} />
+        <button> ADD </button>
         {todos.map((todo) => (
-          <div>
+          <>
+            <br />
             <span
-              style={{ textDecoration: todo.complete ? "line-through" : "" }}
-              key={todo.id}
+              style={{ textDecoration: todo.completed ? "line-through" : "" }}
               onClick={() => {
-                toggleComplete(todo.id);
+                toggleCompleted(todo.id);
               }}
             >
-              <br />
               {todo.id}
               {todo.text}
             </span>
-            <button onClick={() => removeTodo(todo.id)}> REMOVE </button>
-            {/* <button onClick={updateTodo}> Edit </button> */}
-          </div>
+            <button
+              onClick={() => {
+                handleDelete(todo.id);
+              }}
+            >
+              DELETE
+            </button>
+            <br />
+          </>
         ))}
       </form>
     </div>
