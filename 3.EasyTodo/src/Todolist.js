@@ -3,7 +3,7 @@ import React, { useState } from "react";
 export default function Todolist() {
   const [todo, setTodo] = useState("");
   const [todos, setTodos] = useState([]);
-
+  // const [display, setDisplay] = useState("all");
   const handleClick = (e) => {
     setTodo(e.target.value);
   };
@@ -11,7 +11,12 @@ export default function Todolist() {
   const addTodo = () => {
     setTodos([
       ...todos,
-      { id: todos.length + 1, text: todo, completed: false },
+      {
+        id: todos.length + 1,
+        text: todo,
+        completed: false,
+        // display: display,
+      },
     ]);
   };
 
@@ -32,6 +37,16 @@ export default function Todolist() {
     );
   };
 
+  const switchTodos = (todos) => {
+    if (todo.completed === true || todo.completed === false) {
+      setTodos(todos);
+    } else if (todo.completed === false) {
+      setTodos(todos.filter((todo) => !todo.completed));
+    } else if (todo.completed === true) {
+      setTodos(todos.filter((todo) => todo.completed));
+    }
+  };
+
   const handleDelete = (todoId) => {
     setTodos(todos.filter((todo) => todo.id !== todoId));
   };
@@ -42,6 +57,15 @@ export default function Todolist() {
         <h1>TodoList</h1>
         <input id="todo" onChange={handleClick} value={todo} />
         <button type="submit"> ADD </button>
+        <button className="button" onClick={() => switchTodos(todo.completed)}>
+          Show All
+        </button>
+        <button className="button" onClick={() => switchTodos(todo.completed)}>
+          Show Todos
+        </button>
+        <button className="button" onClick={() => switchTodos(todo.completed)}>
+          Show Done
+        </button>
         <br />
         {todos.map((todo) => (
           <>
