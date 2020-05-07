@@ -37,14 +37,19 @@ export default function Todolist() {
     );
   };
 
-  const switchTodos = (todos) => {
-    if (todo.completed === true || todo.completed === false) {
-      setTodos(todos);
-    } else if (todo.completed === false) {
-      setTodos(todos.filter((todo) => !todo.completed));
-    } else if (todo.completed === true) {
-      setTodos(todos.filter((todo) => todo.completed));
-    }
+  // const handleDisplay = () => {
+
+  //   setDisplay(
+  //     display || todo.completed ? setDisplay("done") : setDisplay("todos")
+  //   );
+  // };
+
+  const showTodos = () => {
+    setTodos(todos.filter((todo) => !todo.completed));
+  };
+
+  const showDone = () => {
+    setTodos(todos.filter((todo) => todo.completed));
   };
 
   const handleDelete = (todoId) => {
@@ -57,15 +62,9 @@ export default function Todolist() {
         <h1>TodoList</h1>
         <input id="todo" onChange={handleClick} value={todo} />
         <button type="submit"> ADD </button>
-        <button className="button" onClick={() => switchTodos(todo.completed)}>
-          Show All
-        </button>
-        <button className="button" onClick={() => switchTodos(todo.completed)}>
-          Show Todos
-        </button>
-        <button className="button" onClick={() => switchTodos(todo.completed)}>
-          Show Done
-        </button>
+        <button>Show All</button>
+        <button onClick={() => showTodos()}>Show Todos</button>
+        <button onClick={() => showDone()}>Show Done</button>
         <br />
         {todos.map((todo) => (
           <>
