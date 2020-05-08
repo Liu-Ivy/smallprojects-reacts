@@ -3,7 +3,7 @@ import React, { useState } from "react";
 export default function Todolist() {
   const [todo, setTodo] = useState("");
   const [todos, setTodos] = useState([]);
-  const [display, setDisplay] = useState("all");
+  // const [display, setDisplay] = useState("all");
   const handleClick = (e) => {
     setTodo(e.target.value);
   };
@@ -15,7 +15,7 @@ export default function Todolist() {
         id: todos.length + 1,
         text: todo,
         completed: false,
-        // display: display,
+        display: "notDone",
       },
     ]);
   };
@@ -31,19 +31,32 @@ export default function Todolist() {
     setTodos(
       todos.map((todo) => {
         return todo.id === todoId
-          ? { ...todo, completed: !todo.completed }
+          ? { ...todo, completed: !todo.completed, display: "done" }
           : todo;
       })
     );
   };
 
-  const handleSwitch = () => {
-    if (display === "all") {
-      setDisplay(todos);
-    } else if (display === "notDone") {
-      setDisplay(todos.filter((todo) => !todo.complete));
-    } else if (display === "done") {
-      setDisplay(todos.filter((todo) => todo.complete));
+  // updateTodos = (showTodos) => {
+  //   this.setState({ display: showTodos });
+  // };
+
+  // let todos = [];
+
+  // if (this.state.display === "all") {
+  //   todos = this.state.todos;
+  // } else if (this.state.display === "notDone") {
+  //   todos = this.state.todos.filter((todo) => !todo.complete);
+  // } else if (this.state.display === "done") {
+  //   todos = this.state.todos.filter((todo) => todo.complete);
+  // }
+  const handleSwitch = (e) => {
+    if (e === "notDone") {
+      setTodos(todos.filter((todo) => todo.display === "notDone"));
+    } else if (e === "done") {
+      setTodos(todos.filter((todo) => todo.display === "done"));
+    } else {
+      setTodos(todos);
     }
   };
   const handleDelete = (todoId) => {
