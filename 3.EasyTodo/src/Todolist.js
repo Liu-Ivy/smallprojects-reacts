@@ -28,16 +28,15 @@ export default function Todolist() {
 
   const toggleCompleted = (todoId) => {
     setTodos(
-      todos.map((item) => {
-        return item.id === todoId
-          ? { ...item, completed: !item.completed }
-          : item;
+      todos.map((todo) => {
+        return todo.id === todoId
+          ? { ...todo, completed: !todo.completed }
+          : todo;
       })
     );
   };
 
   const showAll = (todos) => {
-    console.log(todos);
     setTodos(
       todos.map((todo) => {
         return { ...todo, display: true };
@@ -87,29 +86,27 @@ export default function Todolist() {
           Show Done
         </button>
         <br />
-        {todos.map((item) =>
-          item && item.display ? (
-            <>
-              <div
-                key={item.id}
-                style={{ textDecoration: item.completed ? "line-through" : "" }}
-                onClick={() => {
-                  toggleCompleted(item.id);
-                }}
-              >
-                {item.id}
-                {item.text}
-              </div>
-              <button
-                onClick={() => {
-                  handleDelete(item.id);
-                }}
-              >
-                DELETE
-              </button>
-            </>
-          ) : null
-        )}
+        {todos.map((todo) => (
+          <>
+            <div
+              key={todo.id}
+              style={{ textDecoration: todo.completed ? "line-through" : "" }}
+              onClick={() => {
+                toggleCompleted(todo.id);
+              }}
+            >
+              {todo.id}
+              {todo.text}
+            </div>
+            <button
+              onClick={() => {
+                handleDelete(todo.id);
+              }}
+            >
+              DELETE
+            </button>
+          </>
+        ))}
       </form>
     </div>
   );
