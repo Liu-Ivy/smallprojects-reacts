@@ -3,19 +3,14 @@ import React, { useState } from "react";
 export default function Todolist() {
   const [todo, setTodo] = useState("");
   const [todos, setTodos] = useState([]);
-  const handleClick = (e) => {
+  const handleInput = (e) => {
     setTodo(e.target.value);
   };
 
   const addTodo = () => {
     setTodos([
       ...todos,
-      {
-        id: todos.length + 1,
-        text: todo,
-        completed: false,
-        display: true,
-      },
+      { id: todos.length + 1, text: todo, completed: false, display: true },
     ]);
   };
 
@@ -26,7 +21,11 @@ export default function Todolist() {
     setTodo("");
   };
 
-  const toggleCompleted = (todoId) => {
+  const handleDelete = (todoId) => {
+    setTodos(todos.filter((todo) => todo.id !== todoId));
+  };
+
+  const handleToggle = (todoId) => {
     setTodos(
       todos.map((todo) => {
         return todo.id === todoId
@@ -36,79 +35,68 @@ export default function Todolist() {
     );
   };
 
-  const showAll = (todos) => {
+  const handleAll = () => {
     setTodos(
       todos.map((todo) => {
         return { ...todo, display: true };
       })
     );
+    console.log("handleAll", todos);
   };
 
-  const showTodos = (todos) => {
+  const handleTodos = () => {
     setTodos(
       todos.map((todo) => {
         if (todo.completed === false) {
           return { ...todo, display: true };
+        } else {
+          return { ...todo, display: false };
         }
-        return { ...todo, display: false };
       })
     );
+    console.log("handleTodos", todos);
   };
 
-  const showDone = (todos) => {
+  const handleDone = () => {
     setTodos(
       todos.map((todo) => {
         if (todo.completed === true) {
           return { ...todo, display: true };
+        } else {
+          return { ...todo, display: false };
         }
-        return { ...todo, display: false };
       })
     );
-  };
-
-  const handleDelete = (todoId) => {
-    setTodos(todos.filter((todo) => todo.id !== todoId));
+    console.log("handleDone", todos);
   };
 
   return (
     <div>
+      <h1>TO DO LIST</h1>
       <form onSubmit={handleSubmit}>
-        <h1>TodoList</h1>
-        <input id="todo" onChange={handleClick} value={todo} />
-        <button type="submit"> ADD </button>
-        <button className="button" onClick={() => showAll(todos)}>
-          Show All
-        </button>
-        <button className="button" onClick={() => showTodos(todos)}>
-          Show Todos
-        </button>
-        <button className="button" onClick={() => showDone(todos)}>
-          Show Done
-        </button>
+        <input onChange={handleInput} value={todo} />
+        <button> ADD </button>
         <br />
-        {todos.map((item) =>
-          item && item.display ? (
+        {todos.map((todo) =>
+          todo && todo.display ? (
             <>
               <span
-                key={item.id}
-                style={{ textDecoration: item.completed ? "line-through" : "" }}
-                onClick={() => {
-                  toggleCompleted(item.id);
-                }}
+                key={todo.id}
+                onClick={() => handleToggle(todo.id)}
+                style={{ textDecoration: todo.completed ? "line-through" : "" }}
               >
-                {/* {item.id} */}
-                {item.text}
+                {todo.text.toUpperCase()}
               </span>
-              <button
-                onClick={() => {
-                  handleDelete(item.id);
-                }}
-              >
-                DELETE
-              </button>
+              <button onClick={() => handleDelete(todo.id)}> DELETE </button>
+              <br />
             </>
           ) : null
         )}
+        <span>
+          <button onClick={() => handleAll()}> SHOW ALL </button>
+          <button onClick={() => handleTodos()}> SHOW TODOS </button>
+          <button onClick={() => handleDone()}> SHOW DONE </button>
+        </span>
       </form>
     </div>
   );
