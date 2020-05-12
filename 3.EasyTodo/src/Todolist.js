@@ -89,16 +89,16 @@ export default function Todolist() {
         {todos.map((item) =>
           item && item.display ? (
             <>
-              <div
+              <span
                 key={item.id}
                 style={{ textDecoration: item.completed ? "line-through" : "" }}
                 onClick={() => {
                   toggleCompleted(item.id);
                 }}
               >
-                {item.id}
+                {/* {item.id} */}
                 {item.text}
-              </div>
+              </span>
               <button
                 onClick={() => {
                   handleDelete(item.id);
