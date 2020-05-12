@@ -86,27 +86,29 @@ export default function Todolist() {
           Show Done
         </button>
         <br />
-        {todos.map((todo) => (
-          <>
-            <div
-              key={todo.id}
-              style={{ textDecoration: todo.completed ? "line-through" : "" }}
-              onClick={() => {
-                toggleCompleted(todo.id);
-              }}
-            >
-              {todo.id}
-              {todo.text}
-            </div>
-            <button
-              onClick={() => {
-                handleDelete(todo.id);
-              }}
-            >
-              DELETE
-            </button>
-          </>
-        ))}
+        {todos.map((item) =>
+          item && item.display ? (
+            <>
+              <div
+                key={item.id}
+                style={{ textDecoration: item.completed ? "line-through" : "" }}
+                onClick={() => {
+                  toggleCompleted(item.id);
+                }}
+              >
+                {item.id}
+                {item.text}
+              </div>
+              <button
+                onClick={() => {
+                  handleDelete(item.id);
+                }}
+              >
+                DELETE
+              </button>
+            </>
+          ) : null
+        )}
       </form>
     </div>
   );
